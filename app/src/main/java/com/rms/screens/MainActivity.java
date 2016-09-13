@@ -3,6 +3,7 @@ package com.rms.screens;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,16 +13,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.rms.R;
+import com.rms.fragments.CreateEventFragment;
+import com.rms.fragments.ProfileFragment;
+import com.rms.fragments.ReportIssueFragment;
 
+/**
+ * Created by Ashish on 9/13/2016.
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    FrameLayout frameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        frameView = (FrameLayout)findViewById(R.id.frameView);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -82,22 +96,40 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_create_event) {
+            CreateEventFragment fragment = CreateEventFragment.newInstance();
+            android.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameView,fragment);
+            transaction.commit();
+            closeDrawer();
+        } else if (id == R.id.nav_profile) {
+            ProfileFragment fragment = ProfileFragment.newInstance();
+            android.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameView,fragment);
+            transaction.commit();
+            closeDrawer();
+        } else if (id == R.id.nav_report_issue) {
+            ReportIssueFragment fragment = ReportIssueFragment.newInstance();
+            android.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.frameView,fragment);
+            transaction.commit();
+            closeDrawer();
+        } else if (id == R.id.nav_admin) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_tech_support) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_editor_panel) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        }else if (id == R.id.nav_feedback) {
 
         }
 
+        closeDrawer();
+        return true;
+    }
+
+    private void closeDrawer(){
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }
